@@ -1,26 +1,27 @@
-import React from 'react';
-import logo from './logo.svg';
+import React, { Component } from 'react'
 import './App.css';
+import Board from './Components/Board';
+import 'bootstrap/dist/css/bootstrap.css';
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+let id = 0;
+export default class App extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      square: [{ value: "", id }, { value: "", id }, { value: "", id }, { value: "", id }, { value: "", id }, { value: "", id }, { value: "", id }, { value: "", id }, { value: "", id }],
+      nextPlayer: false
+    }
+  };
+
+  setParentState = state => {
+    this.setState(state);
+  };
+  render() {
+    return (
+      <div className="App" style={{ fontFamily: "RockoFLF" }}>
+        <p style={{fontSize: "90px"}}>TIC TAC TOE</p>        <Board {...this.state} setParentState={this.setParentState} />
+      </div>
+    );
+  }
 }
 
-export default App;
