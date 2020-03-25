@@ -75,6 +75,7 @@ export default class App extends Component {
   };
 
   render() {
+    this.getData();
     console.log(highScore)
     let html = highScore.map((item) => {
       return (
