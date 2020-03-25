@@ -79,12 +79,12 @@ export default class App extends Component {
     let html = highScore.map((item) => {
       return (
         <div>
-          {item.player} won in {item.score}
+          {item.player} won after {item.score} second(s)
         </div>
       )
     });
     console.log(html)
-    
+
     if (!this.state.user && !this.state.reset) {
       return (<div className="App">
         <FacebookLogin
