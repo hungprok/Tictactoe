@@ -3,7 +3,6 @@ import Square from './Square';
 import Moves from './Moves';
 import 'bootstrap/dist/css/bootstrap.css';
 
-let moveOrder = 0;
 let winStatus;
 let status = "O goes first";
 export default class Board extends Component {
@@ -23,41 +22,62 @@ export default class Board extends Component {
         for (let i = 0; i < lines.length; i++) {
             const [a, b, c] = lines[i];
             // create a new array with the same values as each winning combo. i.e. when i = 0 the new array of [a, b, c] is [0, 1, 2]
-            if (squares[a].value && squares[a].value === squares[b].value && squares[a].value === squares[c].value) {
-                return squares[a].value;
+            if (squares[a] && squares[a] === squares[b] && squares[a] === squares[c]) {
+                return squares[a];
             }
-        }               
+        }
 
         return null;
     };
 
     onSquareClicked = index => {
-        moveOrder += 1;
-        console.log(index);
-        console.log(moveOrder);
-        if (!this.props.square[index].value) {
-            if (winStatus !== null){alert("We had a winner! Please reset to play again")}
+
+        if (!this.props.square[index]) {
+            if (winStatus !== null) {
+                alert("We had a winner! Please reset to play again");
+            }
             else {
-            let squareList = this.props.square.slice();
-            squareList[index].value = this.props.nextPlayer ? "X" : "O";
-            status = "Next player is " + (this.props.nextPlayer ? "O" : "X")
-            squareList[index].id = moveOrder;
-            console.log(squareList);
-            this.props.setParentState({ square: squareList, nextPlayer: !this.props.nextPlayer })}
+                let squareList = this.props.square.slice();
+                squareList[index] = this.props.nextPlayer ? "X" : "O";
+                status = "Next player is " + (this.props.nextPlayer ? "O" : "X")
+
+                // console.log(squareList);
+                this.props.setParentState({
+                    square: squareList,
+                    nextPlayer: !this.props.nextPlayer,
+                    history: [...this.props.history, { square: squareList, nextPlayer: !this.props.nextPlayer }]
+                })
+            };
         }
         else { alert("You cannot overwrite") };
     };
 
-    render() {        
+    render() {
+        console.log("next", this.props.nextPlayer);
+        console.log("Square", this.props.square);
+        console.log("history", this.props.history); // good? but I have to update it rite?
+        // what is that mean udpate? to display the history and perform the undo fucntion
+
+
         winStatus = this.calculateWinner(this.props.square);
         console.log(winStatus);
         if (winStatus !== null) {
+            this.props.postData();
             status = 'Winner is ' + winStatus;
-          }
+            clearInterval(this.props.clearInterval);
+        } else { status = "O goes first"; }
+
+        if (this.props.reset) {
+            winStatus = null
+        };
+
         return (<div>
             <h1>{status}</h1>
             <div className="row">
-                <div className="col-md-4"></div>
+                <div className="col-md-4">
+                    <h1>ALL TIME HIGH SCORES</h1>
+                    <div>{this.props.highscore}</div>
+                </div>
                 <div className="col-md-4"><div style={{ justifyContent: "center", display: "flex" }}>
                     <div style={{ border: "solid 6px black", padding: "3px" }}>
                         <div style={{ display: "flex" }}>
@@ -77,7 +97,9 @@ export default class Board extends Component {
                         </div>
                     </div>
                 </div></div>
-                {/* <div className="col-md-4"><Moves value={this.props.square} /></div> */}
+                <div className="col-md-4" >
+                    <div className="col-md-1"><Moves {...this.props} history={this.props.history} setParentState={this.props.setParentState} /></div>
+                </div>
             </div>
 
         </div>
