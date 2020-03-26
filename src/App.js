@@ -13,7 +13,7 @@ export default class App extends Component {
       square: ['', '', '', '', '', '', '', '', ''],
       nextPlayer: false,
       history: [],
-      user: "",
+      user: "Hung Nguyen", // this is for the user name without login feature
       score: 0,
       reset: false
     }
@@ -68,7 +68,7 @@ export default class App extends Component {
       square: ['', '', '', '', '', '', '', '', ''],
       nextPlayer: false,
       history: [],
-      user: "",
+      user: "Hung Nguyen",
       score: 0,
       reset: true
     });
@@ -102,8 +102,7 @@ export default class App extends Component {
         <button style={{ width: "100px", height: "50px" }} onClick={() => this.timer()}>START</button>
         <button style={{ width: "100px", height: "50px" }} onClick={() => this.reset()}>RESET</button>
         <p style={{ fontSize: "90px" }}>Time: {this.state.score}</p>
-//         <h1>Player name: {this.state.user}</h1>
-        <h1>Player name: Hung Nguyen</h1>
+        <h1>Player name: {this.state.user}</h1>
         <Board {...this.state}
           setParentState={this.setParentState}
           postData={this.postData}
