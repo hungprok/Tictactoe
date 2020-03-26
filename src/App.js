@@ -86,15 +86,15 @@ export default class App extends Component {
     });
     console.log(html)
 
-    if (!this.state.user && !this.state.reset) {
-      return (<div className="App">
-        <FacebookLogin
-          appId="209935060103469"
-          autoLoad={true}
-          fields="name,email,picture"
-          callback={this.responseFacebook} />
-      </div>)
-    };
+//     if (!this.state.user && !this.state.reset) {
+//       return (<div className="App">
+//         <FacebookLogin
+//           appId="209935060103469"
+//           autoLoad={true}
+//           fields="name,email,picture"
+//           callback={this.responseFacebook} />
+//       </div>)
+//     };
 
     return (
       <div className="App" style={{ fontFamily: "RockoFLF" }}>
@@ -102,7 +102,8 @@ export default class App extends Component {
         <button style={{ width: "100px", height: "50px" }} onClick={() => this.timer()}>START</button>
         <button style={{ width: "100px", height: "50px" }} onClick={() => this.reset()}>RESET</button>
         <p style={{ fontSize: "90px" }}>Time: {this.state.score}</p>
-        <h1>Player name: {this.state.user}</h1>
+//         <h1>Player name: {this.state.user}</h1>
+        <h1>Player name: Hung Nguyen</h1>
         <Board {...this.state}
           setParentState={this.setParentState}
           postData={this.postData}
